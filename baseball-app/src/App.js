@@ -16,7 +16,8 @@ class App extends React.Component {
     hit: false,
     homeScore: 0,
     inning: 0,
-    guestScore: 0
+    guestScore: 0,
+    halfInning: 0
   }
 
   // componentDidMount() {
@@ -31,6 +32,27 @@ class App extends React.Component {
         strikes: this.state.strikes < 2 ? this.state.strikes + 1 : this.state.strikes 
       })
     }
+
+    if(this.state.strikes === 3) {
+      this.setState({
+        outs: this.state.outs < 3 ? this.state.outs + 1 : 0
+      })
+    }
+
+    if(this.state.outs === 3) {
+      this.setState({
+        outs: 0,
+        halfInning: this.state.halfInning + 1
+      })
+    }
+
+    if(this.state.halfInning === 2) {
+      this.setState({
+        inning: this.state.inning + 1,
+        halfInning: 0
+      })
+    }
+
     // setting up the logic for the game, hit needs to get put back to false after resetting strikes and balls
     if( (this.state.strikes === 3) || (this.state.balls === 4) || (this.state.hit) ) {
       this.setState({
